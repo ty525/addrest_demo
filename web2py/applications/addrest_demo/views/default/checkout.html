@@ -26,10 +26,14 @@
                         url: 'http://127.0.0.1:8001/query',
                         data: {'email': email},
                         success: function (data) {
-                            $('#addrest-form input[name=address]').remove();
+                            $('#addrest-form span').remove();
                             $('#addrest-form br').remove();
+                            $('#addrest-form .prompt').remove();
+                            if (data['result']['addresses'].length > 0) {
+                                $('#addrest-form').append('<p class="prompt">Please select the shipping address for this order.</p>')
+                            }
                             for (var i = 0; i < data['result']['addresses'].length; i++) {
-                                $('#addrest-form').append('<br><input type="radio" name="address" val="'
+                                $('#addrest-form').append('<span><input type="radio" name="address" val="'
                                         + data['result']['addresses'][i]['id']
                                         + '">' + data['result']['addresses'][i]['first_name'] + ' '
                                         + data['result']['addresses'][i]['last_name'] + ', '
@@ -39,7 +43,7 @@
                                         + data['result']['addresses'][i]['state'] + ', '
                                         + data['result']['addresses'][i]['zip'] + ', '
                                         + '(' + data['result']['addresses'][i]['area'] + ') '
-                                        + data['result']['addresses'][i]['phone']);
+                                        + data['result']['addresses'][i]['phone'] + '</span>');
                             }
                         }
                     });
@@ -133,6 +137,7 @@
                         </div>
                         <div class="panel-body">
                             <form id="addrest-form">
+                                <p>Please enter your email addrest linked in Addrest.</p>
                                 <input type="text" id="addrest_handle" placeholder="email"/>
                             </form>
                         </div>
@@ -161,12 +166,16 @@
                 </div>
                 <div class="panel-body">
                 {{for item in result['cart']:}}
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="thumbnail">
-                            <img src="{{=item['image']}}" alt="{{=item['item_name']}}" width="70%">
+                            <img src="{{=item['image']}}"
+                                 alt="{{=item['item_name']}}">
 
-                            <div class="caption">
-                                <h4>{{=item['item_name']}}</h4>
+                            <div class="caption" style="text-align: center">
+                                <p>{{=item['item_name']}}</p>
+                                <p>
+                                    ({{=item['quantity']}} in cart)
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -182,6 +191,7 @@
     </div>
     <br>
     <br>
+
     <div class="row">
         This site is built for CMPS 183 course project. No real purchases will be involved in this site.
     </div>

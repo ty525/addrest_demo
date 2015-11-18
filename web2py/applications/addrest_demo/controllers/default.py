@@ -21,7 +21,7 @@ def index():
     """
 
     result = {}
-    result['page_type'] = 'customer'
+
     # add to shopping cart
     if auth.user is not None and request.get_vars['add_one_to_cart'] is not None:
         item_id = request.get_vars['add_one_to_cart']
@@ -67,6 +67,7 @@ def index():
     return dict(user=auth.user, result=result)
 
 
+@auth.requires_login()
 def admin_panel():
     result = {}
     if auth.user is not None and auth.user.email == 'admin@addrest.us':
@@ -94,6 +95,7 @@ def admin_panel():
     return dict(user=auth.user, result=result)
 
 
+@auth.requires_login()
 def checkout():
     result = {}
 
@@ -117,6 +119,7 @@ def checkout():
     return dict(user=auth.user, result=result)
 
 
+@auth.requires_login()
 def confirm_order():
     result = {}
     if auth.user is not None and request.get_vars['address_id'] is not None:
