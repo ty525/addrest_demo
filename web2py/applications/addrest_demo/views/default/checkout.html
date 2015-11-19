@@ -26,14 +26,14 @@
                         url: 'http://127.0.0.1:8001/query',
                         data: {'email': email},
                         success: function (data) {
-                            $('#addrest-form span').remove();
+                            $('#addrest-form div').remove();
                             $('#addrest-form br').remove();
                             $('#addrest-form .prompt').remove();
                             if (data['result']['addresses'].length > 0) {
                                 $('#addrest-form').append('<p class="prompt">Please select the shipping address for this order.</p>')
                             }
                             for (var i = 0; i < data['result']['addresses'].length; i++) {
-                                $('#addrest-form').append('<span><input type="radio" name="address" val="'
+                                $('#addrest-form').append('<div class="radio"><label><input type="radio" name="address" val="'
                                         + data['result']['addresses'][i]['id']
                                         + '">' + data['result']['addresses'][i]['first_name'] + ' '
                                         + data['result']['addresses'][i]['last_name'] + ', '
@@ -43,7 +43,7 @@
                                         + data['result']['addresses'][i]['state'] + ', '
                                         + data['result']['addresses'][i]['zip'] + ', '
                                         + '(' + data['result']['addresses'][i]['area'] + ') '
-                                        + data['result']['addresses'][i]['phone'] + '</span>');
+                                        + data['result']['addresses'][i]['phone'] + '</label></div>');
                             }
                         }
                     });
@@ -136,10 +136,58 @@
                             <h3 class="panel-title">Shipping</h3>
                         </div>
                         <div class="panel-body">
-                            <form id="addrest-form">
-                                <p>Please enter your email addrest linked in Addrest.</p>
-                                <input type="text" id="addrest_handle" placeholder="email"/>
-                            </form>
+                            <div class="addrest-shipping">
+                                <form id="addrest-form">
+                                    <p>Please enter your email addrest linked in Addrest.</p>
+                                    <input type="text" class="form-control" id="addrest_handle" placeholder="email"/>
+                                </form>
+                            </div>
+                            <!--<div class="traditional-shipping">
+                                <form id="traditional-form">
+                                    <p>Please enter your shipping information.</p>
+                                    <table>
+                                        <tr>
+                                            <td>Full name:</td>
+                                            <td><input type="text" name="enterAddressFullName"
+                                                       id="enterAddressFullName"
+                                                       class="enterAddressFormField" size="50"
+                                                       value="" maxlength="50"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Address line 1:</td>
+                                            <td><input type="text" name="enterAddressLine1"
+                                                       id="enterAddressLine1"
+                                                       class="enterAddressFormField" size="50"
+                                                       value="" maxlength="50"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Address line 2:</td>
+                                            <td><input type="text" name="enterAddressLine2"
+                                                       id="enterAddressLine2"
+                                                       class="enterAddressFormField" size="50"
+                                                       value="" maxlength="50"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>City:</td>
+                                            <td><input type="text" name="enterAddressCity" id="enterAddressCity"
+                                                       class="enterAddressFormField" size="50"
+                                                       value="" maxlength="50"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>State:</td>
+                                            <td><input type="text" name="enterAddressState" id="enterAddressState"
+                                                       class="enterAddressFormField" size="50"
+                                                       value="" maxlength="50"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Zip:</td>
+                                            <td><input type="text" name="enterAddressZip" id="enterAddressZip"
+                                                       class="enterAddressFormField" size="50"
+                                                       value="" maxlength="50"></td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -173,6 +221,7 @@
 
                             <div class="caption" style="text-align: center">
                                 <p>{{=item['item_name']}}</p>
+
                                 <p>
                                     ({{=item['quantity']}} in cart)
                                 </p>
